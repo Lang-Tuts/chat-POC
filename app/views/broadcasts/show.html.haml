@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @broadcast.user_id
+%p
+  %b Channel:
+  = @broadcast.channel_id
+
+= link_to 'Edit', edit_broadcast_path(@broadcast)
+\|
+= link_to 'Back', broadcasts_path
