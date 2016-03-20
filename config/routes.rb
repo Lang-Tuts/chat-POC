@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :chats
   resources :communications
   resources :broadcasts
   resources :subscriptions
