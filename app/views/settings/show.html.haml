@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Notification:
+  = @setting.notification
+%p
+  %b Visibility:
+  = @setting.visibility
+
+= link_to 'Edit', edit_setting_path(@setting)
+\|
+= link_to 'Back', settings_path
