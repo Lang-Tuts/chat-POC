@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Sender:
+  = @communication.sender_id
+%p
+  %b Receiver:
+  = @communication.receiver_id
+%p
+  %b Broadcast:
+  = @communication.broadcast_id
+
+= link_to 'Edit', edit_communication_path(@communication)
+\|
+= link_to 'Back', communications_path
