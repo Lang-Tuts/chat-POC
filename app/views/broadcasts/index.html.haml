@@ -3,8 +3,10 @@
 %table
   %thead
     %tr
+      %th Id
       %th User
       %th Channel
+      %th Message
       %th
       %th
       %th
@@ -12,8 +14,11 @@
   %tbody
     - @broadcasts.each do |broadcast|
       %tr
-        %td= broadcast.user_id
+        %td= broadcast.id
+        %td
+          = broadcast.user_id
         %td= broadcast.channel_id
+        %td= broadcast.message
         %td= link_to 'Show', broadcast
         %td= link_to 'Edit', edit_broadcast_path(broadcast)
         %td= link_to 'Destroy', broadcast, :method => :delete, :data => { :confirm => 'Are you sure?' }

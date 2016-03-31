@@ -7,4 +7,56 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = yield
+    .row
+      %nav.teal
+        .nav-wrapper
+          %a.brand-logo{:href => "#!"}
+            = image_tag('logo.png', style: "height: 50px")
+            = "#mebag"
+          %a.button-collapse{"data-activates" => "mobile-demo", :href => "#"}
+            %i.material-icons >>
+          %ul.right.hide-on-med-and-down
+
+            - if user_signed_in?
+              %li
+                %a{:href => "/"}
+              %li
+                %a{:href => "/channels"} My Channels
+              %li
+                %a{:href => "/communications"} My communications
+              %li
+                %a{:href => "/subscriptions"} My subscription
+              %li
+                %a{:href => "/chats"} My Chats
+              %li
+                %a{:href => "/broadcasts"} My broadcasts
+              %li
+                = link_to "Logout", destroy_user_session_path, method: :delete
+            - else
+              %li
+                %a{:href => "/users/sign_in"} Sign In
+              %li
+                %a{:href => "/users/sign_up"} Sign Up
+          %ul#mobile-demo.side-nav
+
+            - if user_signed_in?
+              %li
+                %a{:href => "/"} Dashboard
+              %li
+                %a{:href => "/communications"} My communications
+              %li
+                %a{:href => "/broadcasts"} My broadcasts
+              %li
+                %a{:href => "/channels"} My Channels
+              %li
+                %a{:href => "/subscriptions"} My subscription
+              %li
+                = link_to "Logout", destroy_user_session_path, method: :delete
+            - else
+              %li
+                %a{:href => "/users/sign_in"} Sign In
+              %li
+                %a{:href => "/users/sign_up"} Sign Up
+    .container
+      = User.where(id: current_user.try(:id).to_s).first.try(:email)
+      = yield

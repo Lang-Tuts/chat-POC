@@ -4,7 +4,12 @@ class CommunicationsController < ApplicationController
   # GET /communications
   # GET /communications.json
   def index
-    @communications = Communication.all
+    if current_user.try(:email) == "errakeshpd@gmail.com"
+      @communications = Communication.all
+    else
+      @communications = current_user.try(:communications)
+    end
+    @chat = Chat.new
   end
 
   # GET /communications/1

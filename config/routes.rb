@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'communications#index'
   resources :messages
   resources :chats
   resources :communications

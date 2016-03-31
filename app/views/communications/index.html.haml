@@ -1,25 +1,33 @@
-%h1 Listing communications
+%h1 Communications
+- if @communications.nil?
+  No chat for you
+- else
+  .row
+    .col.s3
+      %ul.tabs{style: 'display: table;'}
+        - @communications.each do |c|
+          %li.tab{style: 'width: 100%'}
+            %a{ href: "#" + "#{c.id.to_s.downcase}"}
+              = c.broadcast.channel.name
+    .col.s9{style: 'border: 1px solid red; height: 400px'}
+      - @communications.each do |c|
+        .col.s12{id: c.id.to_s.downcase }
+          - chat =  c.chats
+          - chat.each do |t|
+            .col-s12
+              - if current_user.id.to_s == t.user_id.to_s
+                %p{style: 'background: red;', title: "#{c.id}"}
+                  = t.message
+              - if current_user.id.to_s != t.user_id.to_s
+                %p{style: 'background: green;text-align:right', title: "#{c.id}"}
+                  = t.message
+          .col-s12
+            = form_for @chat, url: '/chats' do |f|
+              = f.text_field :user_id, value: current_user.id, class: 'hide'
+              = f.text_field :communication_id, value: c.id, class: 'hide'
+              = f.text_field :message
+              = f.submit
 
-%table
-  %thead
-    %tr
-      %th Sender
-      %th Receiver
-      %th Broadcast
-      %th
-      %th
-      %th
 
-  %tbody
-    - @communications.each do |communication|
-      %tr
-        %td= communication.sender_id
-        %td= communication.receiver_id
-        %td= communication.broadcast_id
-        %td= link_to 'Show', communication
-        %td= link_to 'Edit', edit_communication_path(communication)
-        %td= link_to 'Destroy', communication, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
 
 = link_to 'New Communication', new_communication_path

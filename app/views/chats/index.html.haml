@@ -5,6 +5,7 @@
     %tr
       %th User
       %th Communication
+      %th Message
       %th
       %th
       %th
@@ -12,8 +13,9 @@
   %tbody
     - @chats.each do |chat|
       %tr
-        %td= chat.user_id
+        %td= User.where(id: chat.user_id.to_s).first.email
         %td= chat.communication_id
+        %td= chat.message
         %td= link_to 'Show', chat
         %td= link_to 'Edit', edit_chat_path(chat)
         %td= link_to 'Destroy', chat, :method => :delete, :data => { :confirm => 'Are you sure?' }

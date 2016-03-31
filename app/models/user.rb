@@ -1,6 +1,8 @@
 class User
   include Mongoid::Document
   rolify
+  has_many :communications, foreign_key: 'receiver_id'
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

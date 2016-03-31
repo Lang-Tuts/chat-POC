@@ -26,9 +26,16 @@ class BroadcastsController < ApplicationController
   def create
     @broadcast = Broadcast.new(broadcast_params)
 
+
+    c = Channel.where(id: @broadcast.channel_id).first
+    c.subscriptions.all.each do |s|
+      c = Communication.create(broadcast_id: @broadcast.id, sender_id: @broadcast.user_id, receiver_id: s.user_id)
+      c.chats.create(user_id: current_user.id, message: @broadcast.message)
+    end
+
     respond_to do |format|
       if @broadcast.save
-        format.html { redirect_to @broadcast, notice: 'Broadcast was successfully created.' }
+        format.html { redirect_to :back, notice: 'Broadcast was successfully created.' }
         format.json { render :show, status: :created, location: @broadcast }
       else
         format.html { render :new }
@@ -69,6 +76,6 @@ class BroadcastsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def broadcast_params
-      params.require(:broadcast).permit(:user_id, :channel_id)
+      params.require(:broadcast).permit(:user_id, :channel_id, :message)
     end
 end

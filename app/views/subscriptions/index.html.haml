@@ -12,8 +12,8 @@
   %tbody
     - @subscriptions.each do |subscription|
       %tr
-        %td= subscription.user_id
-        %td= subscription.channel_id
+        %td= User.where(id: subscription.user_id.to_s).first.email
+        %td= Channel.where(id: subscription.channel_id.to_s).first.name
         %td= link_to 'Show', subscription
         %td= link_to 'Edit', edit_subscription_path(subscription)
         %td= link_to 'Destroy', subscription, :method => :delete, :data => { :confirm => 'Are you sure?' }
